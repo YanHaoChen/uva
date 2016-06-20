@@ -45,38 +45,42 @@ using namespace std;
 int main(){
     stack<string> ans;
     long long getNum=0;
-	 //modString為單位名稱
+    //modString為單位名稱
     string modString[] = {" shata"," hajar"," lakh"," kuti"};
-	 //mod為單位之間，由小到大的差距間隔
+    //mod為單位之間，由小到大的差距間隔
     int mod[]={100,10,100,100};
     long long outputCount = 1;
     while (cin >> getNum){
         int modCount = 1;
         int stringModCount = 0;
-			//因小於100的數值沒有實際單位符號，所以先單獨處理
-			
-			//if：如為零，直接將0放入ans中
+        
+        //因小於100的數值沒有實際單位符號，所以先單獨處理
+	//if：如為零，直接將0放入ans中
         if (getNum == 0){
             ans.push(" "+to_string(0));
+            
         //else if：如數值不為零，將數值放入ans中
         }else if(getNum % 100 != 0){
             ans.push(" "+to_string(getNum % 100));
         }
         getNum /= 100;
-			//接下來就是把數值切開並結合單位，放入ans中
+	
+	//接下來就是把數值切開並結合單位，放入ans中
         while (getNum){
             int getModNum = 0;
             int nowMod = modCount%4;
             int nowStringMod = stringModCount%4;
             getModNum = getNum % mod[nowMod];
-				  //如數值不為零，就把數值跟單位結合後，放入ans
+	    
+	    //如數值不為零，就把數值跟單位結合後，放入ans
             if (getModNum != 0){
                 ans.push(" "+to_string(getModNum)+modString[nowStringMod]);
-				  //else if的觸發條件
-  			     //1. getModNum == 0 -> 切出來的數值為0
-             //2. nowStringMod == 3 -> 單位在kuti
-             //3. getNum > 100 -> 還有第二輪的數值存在
-		 			//達成以上條件，補上kuti
+	    
+	    //else if的觸發條件
+            //1. getModNum == 0 -> 切出來的數值為0
+            //2. nowStringMod == 3 -> 單位在kuti
+            //3. getNum > 100 -> 還有第二輪的數值存在
+	    //達成以上條件，補上kuti
             }else if (nowStringMod == 3 && getNum > 100){
             		ans.push(" kuti");
             }
@@ -84,7 +88,8 @@ int main(){
             modCount++;
             stringModCount++;           
         }
-			//設定好答案編號，再把ans的資料都吐出來，就是答案
+        
+	//設定好答案編號，再把ans的資料都吐出來，就是答案
         cout <<setw(4)<<right<< outputCount++ <<".";
         while(!ans.empty()){
             cout << ans.top();
